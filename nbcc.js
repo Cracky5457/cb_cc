@@ -11,8 +11,8 @@ define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events'
         console.log("load compatibility icon");
         // add compatibility icon if necessary
         if ($('#compatibility').length === 0) {
-            $('#notification_area').append('<i id="compatibility" class="fa fa-refresh" title="Kernel Idle"></i>');
             $('#notification_area').append('<button id="btn-refresh-compatibility" class="btn btn-default" title="refresh compatibility state" data-jupyter-action="jupyter-notebook:refresh-compatibility"><i class="fa fa-refresh"></i></button>');
+            $('#notification_area').append('<i id="compatibility" class="kernel_busy_icon title="Kernel Idle"></i>');
         }
     };
 

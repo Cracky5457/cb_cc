@@ -31,10 +31,12 @@ define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events'
             
             checks = {} for requirement in requirements: check = test_requirement(requirement) if check: checks[check[0]] = check[1]
             
-            print json.dumps(checks)`
+            return json.dumps(checks)`
 
             kernel.execute(python_code,
-                { iopub : { output : data => handle(JSON.parse(data.content.text)) }
+                { iopub : 
+                    { output : data => handle(JSON.parse(data.content.text)) 
+                }
             });
         }
     }

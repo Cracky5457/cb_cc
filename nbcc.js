@@ -29,10 +29,12 @@ define( function () {
     var load_ipython_extension = function () {
         compatibility_check_icon();
 
-        var kernel = IPython.notebook.kernel;
+        $([IPython.events]).on("notebook_loaded.Notebook", function () {
+            var kernel = IPython.notebook.kernel;
 
-        kernel.execute(python_code,
-            { iopub : { output : data => handle(JSON.parse(data.content.text)) }
+            kernel.execute(python_code,
+                { iopub : { output : data => handle(JSON.parse(data.content.text)) }
+            });
         });
 
     };

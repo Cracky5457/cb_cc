@@ -1,4 +1,6 @@
-define( function () {
+define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events', './notebook_model', 'base/js/namespace'],
+  function (require, $, utils, dialog, events, notebookModel, Jupyter) {
+    'use strict';
     // change the compatibility icon color based on the compatibility checks
     var handle = function(requirementChecks) {
         const color = Object.keys(requirementChecks).length ? "red" : "green";
@@ -27,13 +29,14 @@ define( function () {
     print json.dumps(checks)`
 
     var execute_compatibility_check = function() {
-        if (!IPython.notebook) return;
+        if (IPython.notebook.kernel && IPython.notebook.kernel.is_connected()) {
 
-        var kernel = Jupyter.notebook.kernel;
+            var kernel = IPython.notebook.kernel;
 
-        kernel.execute(python_code,
-            { iopub : { output : data => handle(JSON.parse(data.content.text)) }
-        });
+            kernel.execute(python_code,
+                { iopub : { output : data => handle(JSON.parse(data.content.text)) }
+            });
+        }
     }
 
     var load_ipython_extension = function () {
@@ -42,6 +45,10 @@ define( function () {
         $([IPython.events]).on("notebook_loaded.Notebook", function () {
             execute_compatibility_check();
         });
+
+        $([IPython.events]).on('kernel_ready.Kernel kernel_created.Session notebook_loaded.Notebook', function() {
+            execute_compatibility_check();
+          });
 
     };
     

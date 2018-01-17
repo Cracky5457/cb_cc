@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events', './notebook_model', 'base/js/namespace'],
+define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events', 'base/js/namespace'],
   function (require, $, utils, dialog, events, notebookModel, Jupyter) {
     'use strict';
     // change the compatibility icon color based on the compatibility checks

@@ -22,7 +22,7 @@ define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events'
 
             var requirement = IPython.notebook.metadata.requirements
 
-            var python_code = "from pkg_resources import DistributionNotFound, VersionConflict import json;"+
+            var python_code = "import pkg_resources from pkg_resources import DistributionNotFound, VersionConflict import json;"+
                               "requirements="+JSON.stringify(requirement)+" "+
                               "def test_requirement(requirement): try: pkg_resources.require(requirement) except DistributionNotFound as err: return ( err.req.name, err.report() ) except VersionConflict as err: return ( err.req.name, err.report() ) " + 
                               "checks = {} for requirement in requirements: check = test_requirement(requirement) if check: checks[check[0]] = check[1] "

@@ -6,7 +6,7 @@ define( function () {
     };
     
     var compatibility_check_icon = function () {
-        console.log("load compatibility icon")
+        console.log("load compatibility icon");
         // add compatibility icon if necessary
         if ($('#compatibility').length === 0) {
             $('#notification_area').append('<i id="compatibility" class="kernel_busy_icon" title="Kernel Idle"></i>');

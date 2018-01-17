@@ -28,19 +28,18 @@ define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events'
                               "checks = {} for requirement in requirements: check = test_requirement(requirement) if check: checks[check[0]] = check[1] "
                               "return json.dumps(checks)"
             
-            kernel.execute(python_code, function(data) { 
-                    handle(JSON.parse(data.content.text))
-                });
+            kernel.execute(python_code,{ iopub : 
+                { output : data => handle(JSON.parse(data.content.text))}
+            });
         }
     }
 
     var load_ipython_extension = function () {
         compatibility_check_icon();
 
-        $([IPython.events]).on('kernel_ready.Kernel kernel_created.Session notebook_loaded.Notebook',
-                                { iopub : 
-                                    { output : data => handle(JSON.parse(data.content.text))}
-                                });
+        $([IPython.events]).on('kernel_ready.Kernel kernel_created.Session notebook_loaded.Notebook', function() {
+            execute_compatibility_check();
+          });
 
     };
     

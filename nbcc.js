@@ -29,7 +29,7 @@ define( function () {
     var execute_compatibility_check = function() {
         if (!IPython.notebook) return;
 
-        var kernel = IPython.notebook.kernel;
+        var kernel = Jupyter.notebook.kernel;
 
         kernel.execute(python_code,
             { iopub : { output : data => handle(JSON.parse(data.content.text)) }

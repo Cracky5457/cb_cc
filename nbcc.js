@@ -26,15 +26,21 @@ define( function () {
     
     print json.dumps(checks)`
 
+    var execute_compatibility_check = function() {
+        if (!IPython.notebook) return;
+
+        var kernel = IPython.notebook.kernel;
+
+        kernel.execute(python_code,
+            { iopub : { output : data => handle(JSON.parse(data.content.text)) }
+        });
+    }
+
     var load_ipython_extension = function () {
         compatibility_check_icon();
 
         $([IPython.events]).on("notebook_loaded.Notebook", function () {
-            var kernel = IPython.notebook.kernel;
-
-            kernel.execute(python_code,
-                { iopub : { output : data => handle(JSON.parse(data.content.text)) }
-            });
+            execute_compatibility_check();
         });
 
     };

@@ -11,9 +11,11 @@ define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events'
         console.log("load compatibility icon");
         // add compatibility icon if necessary
         if ($('#compatibility').length === 0) {
-            $('#notification_area').append('<i id="compatibility" class="kernel_busy_icon" title="Kernel Idle"></i>');
+            $('#notification_area').append('<i id="compatibility" class="fa fa-refresh" title="Kernel Idle"></i>');
+            $('#notification_area').append('<button id="btn-refresh-compatibility" class="btn btn-default" title="refresh compatibility state" data-jupyter-action="jupyter-notebook:refresh-compatibility"><i class="fa fa-refresh"></i></button>');
         }
     };
+
 
     var execute_compatibility_check = function() {
         if (IPython.notebook.kernel && IPython.notebook.kernel.is_connected()) {
@@ -55,6 +57,10 @@ print json.dumps(checks)`
         compatibility_check_icon();
 
         $([IPython.events]).on('kernel_ready.Kernel kernel_created.Session notebook_loaded.Notebook', function() {
+            execute_compatibility_check();
+          });
+
+          $( "#btn-refresh-compatibility" ).click(function() {
             execute_compatibility_check();
           });
 

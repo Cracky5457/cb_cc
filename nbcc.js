@@ -13,8 +13,28 @@ define( function () {
         }
     };
     
+    var requirement = IPython.notebook.metadata.requirements
+
+    var python_code = 
+    `import pkg_resources from pkg_resources import DistributionNotFound, VersionConflict import json
+
+    requirements = `+requirement+`
+    
+    def test_requirement(requirement): try: pkg_resources.require(requirement) except DistributionNotFound as err: return ( err.req.name, err.report() ) except VersionConflict as err: return ( err.req.name, err.report() )
+    
+    checks = {} for requirement in requirements: check = test_requirement(requirement) if check: checks[check[0]] = check[1]
+    
+    print json.dumps(checks)`
+
     var load_ipython_extension = function () {
         compatibility_check_icon();
+
+        var kernel = IPython.notebook.kernel;
+
+        kernel.execute(python_code,
+            { iopub : { output : data => handle(JSON.parse(data.content.text)) }
+        });
+
     };
     
     return {

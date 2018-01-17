@@ -42,10 +42,6 @@ define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events'
     var load_ipython_extension = function () {
         compatibility_check_icon();
 
-        $([IPython.events]).on("notebook_loaded.Notebook", function () {
-            execute_compatibility_check();
-        });
-
         $([IPython.events]).on('kernel_ready.Kernel kernel_created.Session notebook_loaded.Notebook', function() {
             execute_compatibility_check();
           });

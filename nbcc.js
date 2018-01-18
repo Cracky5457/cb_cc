@@ -47,7 +47,7 @@ for requirement in requirements:
     if check:
         checks[check[0]] = check[1]
     
-print json.dumps(checks)`
+print (json.dumps(checks))`
 
                 kernel.execute(python_code,{ iopub : 
                     { output : data => handle(JSON.parse(data.content.text))}

@@ -26,7 +26,7 @@ define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events'
 
             if ((typeof requirement !== "undefined") && (requirement !== null)) {
             
-                var python_code = `
+            var python_code = `
 import pkg_resources
 from pkg_resources import DistributionNotFound, VersionConflict
 import json
@@ -35,7 +35,7 @@ requirements = ${JSON.stringify(requirement)}
 
 def test_requirement(requirement):
     try:
-        pkg_resources.require(requirement)git s
+        pkg_resources.require(requirement)
     except DistributionNotFound as err:
         return ( err.req.name, err.report() )
     except VersionConflict as err:

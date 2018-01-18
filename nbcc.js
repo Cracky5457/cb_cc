@@ -23,8 +23,10 @@ define(['require', 'jquery', 'base/js/utils', 'base/js/dialog', 'base/js/events'
             var kernel = IPython.notebook.kernel;
 
             var requirement = IPython.notebook.metadata.requirements
+
+            if ((typeof requirement !== "undefined") && (requirement !== null)) {
             
-            var python_code = `
+                var python_code = `
 import pkg_resources
 from pkg_resources import DistributionNotFound, VersionConflict
 import json
@@ -47,16 +49,18 @@ for requirement in requirements:
     
 print json.dumps(checks)`
 
-            kernel.execute(python_code,{ iopub : 
-                { output : data => handle(JSON.parse(data.content.text))}
-            });
+                kernel.execute(python_code,{ iopub : 
+                    { output : data => handle(JSON.parse(data.content.text))}
+                });
+
+            }
         }
     }
 
     var load_ipython_extension = function () {
         compatibility_check_icon();
 
-        $([IPython.events]).on('kernel_ready.Kernel kernel_created.Session kernel_idle.Kernel notebook_loaded.Notebook', function() {
+        $([IPython.events]).on('kernel_ready.Kernel kernel_created.Session notebook_loaded.Notebook', function() {
             execute_compatibility_check();
         });
 
@@ -64,7 +68,7 @@ print json.dumps(checks)`
             execute_compatibility_check();
         });
 
-
+        
 
     };
     

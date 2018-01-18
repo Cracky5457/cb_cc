@@ -33,7 +33,7 @@ requirements = ${JSON.stringify(requirement)}
 
 def test_requirement(requirement):
     try:
-        pkg_resources.require(requirement)
+        pkg_resources.require(requirement)git s
     except DistributionNotFound as err:
         return ( err.req.name, err.report() )
     except VersionConflict as err:
@@ -56,13 +56,15 @@ print json.dumps(checks)`
     var load_ipython_extension = function () {
         compatibility_check_icon();
 
-        $([IPython.events]).on('kernel_ready.Kernel kernel_created.Session notebook_loaded.Notebook', function() {
+        $([IPython.events]).on('kernel_ready.Kernel kernel_created.Session kernel_idle.Kernel notebook_loaded.Notebook', function() {
             execute_compatibility_check();
-          });
+        });
 
-          $( "#btn-refresh-compatibility" ).click(function() {
+        $("#btn-refresh-compatibility" ).click(function() {
             execute_compatibility_check();
-          });
+        });
+
+
 
     };
     
